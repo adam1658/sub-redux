@@ -1,0 +1,41 @@
+{
+  "name": "sub-redux",
+  "version": "0.0.3",
+  "description": "",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib/* && tsc",
+    "prepublish": "npm run build",
+    "format": "prettier --write src/**/*.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adam1658/subredux.git"
+  },
+  "author": "Adam Rich <adam.james.rich@me.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adam1658/subredux/issues"
+  },
+  "dependencies": {
+    "typesafe-actions": "^4.4.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-redux": "^7.1.0-alpha.5",
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.2",
+    "@types/react": "^16.8.18",
+    "@types/react-redux": "^7.0.9",
+    "prettier": "^1.17.1",
+    "react": "^16.8.6",
+    "react-redux": "^7.1.0-alpha.5",
+    "redux": "^4.0.1",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.4.5"
+  }
+}
