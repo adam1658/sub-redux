@@ -7,17 +7,17 @@
   "scripts": {
     "build": "rimraf lib/* && tsc",
     "prepublish": "npm run build",
-    "format": "prettier --write src/**/*.ts",
+    "format": "prettier --write src/**/*.ts **/*.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adam1658/subredux.git"
+    "url": "git+https://github.com/adam1658/sub-redux.git"
   },
   "author": "Adam Rich <adam.james.rich@me.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adam1658/subredux/issues"
+    "url": "https://github.com/adam1658/sub-redux/issues"
   },
   "dependencies": {
     "typesafe-actions": "^4.4.0"

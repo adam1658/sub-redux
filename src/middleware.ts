@@ -1,5 +1,6 @@
 import { Middleware, Dispatch, MiddlewareAPI, compose } from 'redux';
-import { Action, wrapSubAction, unwrapSubAction, isSubAction } from './actions';
+import { Action, isSubAction } from './actions';
+import { wrapSubAction, unwrapSubAction } from './actionHelpers';
 import { getSubMiddlewareApi } from './subStore';
 
 export const middleware: Middleware = store => {

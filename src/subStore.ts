@@ -1,4 +1,4 @@
-import { wrapSubAction } from './actions';
+import { wrapSubAction } from './actionHelpers';
 import { MiddlewareAPI, Store } from 'redux';
 
 export function getSubMiddlewareApi(
@@ -17,6 +17,7 @@ export function getSubMiddlewareApi(
 export type SubReduxStore = Store & {
   isSubReduxStore: true;
   subReduxInstance: string;
+  parentStore: Store;
 };
 export function getSubStore(instance: string, store: Store): SubReduxStore {
   return {
@@ -28,5 +29,6 @@ export function getSubStore(instance: string, store: Store): SubReduxStore {
 
     isSubReduxStore: true,
     subReduxInstance: instance,
+    parentStore: store,
   };
 }

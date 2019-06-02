@@ -1,12 +1,14 @@
-import { Action, isSubAction, unwrapSubAction } from './actions';
+import { Action as ReduxAction } from 'redux';
+import { isDestroyAction, isInitAction, isSubAction } from './actions';
+import { unwrapSubAction } from './actionHelpers';
 import { SubReducer, SubState } from './types';
 
 export type State = Readonly<
   Record<string, { state: SubState; reducer: SubReducer }>
 >;
 
-export function reducer(state: State = {}, action: Action) {
-  if (action.type === 'SUB_REDUX/INIT') {
+export function reducer(state: State = {}, action: ReduxAction) {
+  if (isInitAction(action)) {
     return {
       ...state,
       [action.payload.instance]: {
@@ -28,7 +30,7 @@ export function reducer(state: State = {}, action: Action) {
     };
   }
 
-  if (action.type === 'SUB_REDUX/DESTROY') {
+  if (isDestroyAction(action)) {
     const newState = { ...state };
     delete newState[action.payload.instance];
     return newState;

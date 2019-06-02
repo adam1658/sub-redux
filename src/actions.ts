@@ -1,10 +1,11 @@
-import { Middleware } from 'redux';
+import { Action as ReduxAction, Middleware } from 'redux';
 import {
   ActionType,
   createCustomAction,
   createStandardAction,
 } from 'typesafe-actions';
-import { SubAction, SubReducer, SubState } from './types';
+import { wrapSubAction } from './actionHelpers';
+import { SubReducer, SubState } from './types';
 
 // Actions *********************************************************************
 let nextId = 1;
@@ -28,19 +29,7 @@ export const actions = {
     }),
   ),
 
-  subAction: createCustomAction(
-    'SUB_REDUX/SUB_ACTION',
-    () => ({
-      instance,
-      subAction,
-    }: {
-      instance: string;
-      subAction: SubAction;
-    }) => ({
-      ...subAction,
-      type: `SUB_REDUX/${instance}/${subAction.type}` as 'SUB_REDUX/SUB_ACTION',
-    }),
-  ),
+  subAction: createCustomAction('SUB_REDUX/x/SUB_ACTION', () => wrapSubAction),
 
   destroy: createStandardAction('SUB_REDUX/DESTROY')<{ instance: string }>(),
 };
@@ -48,28 +37,17 @@ export const actions = {
 export type Action = ActionType<typeof actions>;
 
 // Subaction helpers ***********************************************************
+export const isInitAction = (
+  action: ReduxAction,
+): action is ReturnType<typeof actions.init> =>
+  action.type === 'SUB_REDUX/INIT';
+
 export const isSubAction = (
-  action: SubAction,
+  action: ReduxAction,
 ): action is ReturnType<typeof actions.subAction> =>
   !!action.type.match(/^SUB_REDUX\/([0-9a-zA-Z]+)\/(.*)$/);
 
-export const wrapSubAction = actions.subAction;
-export const unwrapSubAction = (
-  action: Action,
-): { instance: string; subAction: SubAction } => {
-  const match = action.type.match(/^SUB_REDUX\/([0-9a-zA-Z]+)\/(.*)$/);
-
-  if (!match) {
-    throw new Error('Invalid action for unwrapSubAction');
-  }
-
-  const [, instance, subType] = match;
-
-  return {
-    instance,
-    subAction: {
-      ...action,
-      type: subType,
-    },
-  };
-};
+export const isDestroyAction = (
+  action: ReduxAction,
+): action is ReturnType<typeof actions.destroy> =>
+  action.type === 'SUB_REDUX/DESTROY';
